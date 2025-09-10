@@ -43,14 +43,27 @@
     </div>
   </body>
   <script>
-    const spoken_text = "";
-    const summary_text = "";
+    let transcription_text = "";
+    let summary_text = "";
 
     OneSignalDeferred.push(async function (OneSignal) {
-      OneSignal.Notifications.addEventListener("event", (event) => {
-        notif = event.getNotification();
-        console.log(notif);
-      });
+      OneSignal.Notifications.addEventListener(
+        "foregroundWillDisplay",
+        (event) => {
+          notif = event.getNotification();
+          content = notif.data;
+
+          console.log(content);
+
+          transcription_text = content.transcription_text;
+          summary_text = content.summary_text;
+
+          document.getElementById("live-transcription-container").textContent =
+            transcription_text;
+          document.getElementById("live-summary-container").textContent =
+            summary_text;
+        }
+      );
     });
   </script>
 </html>
