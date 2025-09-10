@@ -51,7 +51,7 @@
         "foregroundWillDisplay",
         (event) => {
           notif = event.notification;
-          content = notif.data;
+          content = notif.additionalData;
 
           console.log(notif);
           console.log(content);
