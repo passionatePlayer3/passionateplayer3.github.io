@@ -50,8 +50,6 @@
       OneSignal.Notifications.addEventListener(
         "foregroundWillDisplay",
         (event) => {
-          event.preventDefault();
-
           notif = event.notification;
           content = notif.data;
 
