@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "Speech2Text",
+  "short_name": "S2T",
+  "display": "standalone",
+  "start_url": "/",
+  "theme_color": "#E54B4D",
+  "background_color": "#ffffff",
+  "icons": [
+    { "src": "/icon192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon512x512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "id": "?homescreen=1"
+}
