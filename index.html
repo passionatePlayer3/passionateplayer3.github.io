@@ -20,6 +20,15 @@
             enable: false,
           },
         });
+
+        if (
+          OneSignal.Notifications.isPushSupported() &&
+          !OneSignal.User.PushSubscription.optedIn
+        ) {
+          await OneSignal.Notifications.requestPermission();
+        } else {
+          console.error("No push supported");
+        }
       });
     </script>
   </head>
