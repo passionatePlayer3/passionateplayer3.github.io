@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Speech 2 Text</title>
     <link rel="stylesheet" href="./styles.css" />
+    <script
+      src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+      defer
+    ></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function (OneSignal) {
+        await OneSignal.init({
+          appId: "577d1c74-4f07-49a0-9895-814ab6a48ce4",
+          safari_web_id:
+            "web.onesignal.auto.3a3b4186-8f32-4bbf-a810-be3f3be590a9",
+          notifyButton: {
+            enable: true,
+          },
+        });
+      });
+    </script>
   </head>
   <body>
     <div id="overall-container">
@@ -25,5 +42,15 @@
       </div>
     </div>
   </body>
-  <script></script>
+  <script>
+    const spoken_text = "";
+    const summary_text = "";
+
+    OneSignalDeferred.push(async function (OneSignal) {
+      OneSignal.Notifications.addEventListener("event", (event) => {
+        notif = event.getNotification();
+        console.log(notif);
+      });
+    });
+  </script>
 </html>
