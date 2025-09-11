@@ -32,6 +32,9 @@
   </head>
   <body>
     <div id="overall-container">
+      <div id="select-container">
+        <select id="select-element"></select>
+      </div>
       <div id="img-container">
         <img src="./bg.png" onerror="this.style.display = 'none'" />
       </div>
@@ -50,26 +53,52 @@
     </div>
   </body>
   <script>
-    let transcription_text = "";
-    let summary_text = "";
+    let transcription_dict = "";
+    let summary_dict = "";
+
+    document
+      .getElementById("select-element")
+      .addEventListener("change", (event) => {
+        const lang = this.value;
+        const trans_content = transcription_dict.lang;
+        const summary_content = summary_dict.lang;
+
+        document.getElementById("live-transcription-text").textContent =
+          trans_content;
+        document.getElementById("live-summary-text").textContent =
+          summary_content;
+      });
+
+    function add_options(lang_codes) {
+      const selectElement = document.getElementById("select-element");
+
+      while (selectElement.firstChild) {
+        selectElement.removeChild(selectElement.firstChild);
+      }
+
+      lang_codes.foreach((code) => {
+        const option = new Option(code, code);
+        selectElement.add(option);
+      });
+    }
 
     OneSignalDeferred.push(async function (OneSignal) {
       OneSignal.Notifications.addEventListener(
         "foregroundWillDisplay",
         (event) => {
-          notif = event.notification;
-          content = notif.additionalData;
+          const notif = event.notification;
+          const content = notif.additionalData;
 
-          console.log(notif);
-          console.log(content);
+          transcription_dict = content.transcription_texts;
+          summary_dict = content.summary_texts;
 
-          transcription_text = content.transcription_text;
-          summary_text = content.summary_text;
+          const lang_codes = Object.keys(transcription_dict);
+          add_options(lang_codes);
 
           document.getElementById("live-transcription-text").textContent =
-            transcription_text;
+            transcription_dict[lang_codes[0]];
           document.getElementById("live-summary-text").textContent =
-            summary_text;
+            summary_dict[lang_codes[0]];
         }
       );
     });
